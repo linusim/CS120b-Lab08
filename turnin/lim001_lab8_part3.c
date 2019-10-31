@@ -25,32 +25,20 @@ int main(void) {
 
 	ADC_init();
 
+	unsigned short my_short;
 	unsigned short max = 1024;
 	unsigned char tempB = 0x00;
 		
 	while(1) {
-		unsigned short my_short = ADC;
-		
-		if(my_short <= 0) {
-			tempB = 0x00;
-		} else if(my_short <= (max * 0.125)) {
-			tempB = 0x01;
-		} else if(my_short <= (max * 0.25)) {
-			tempB = 0x03;
-		} else if(my_short <= (max * 0.375)) {
-			tempB = 0x07;
-		} else if(my_short <= (max * 0.5)) {
-			tempB = 0x0F;
-		} else if(my_short <= (max * 0.625)) {
-			tempB = 0x1F;
-		} else if(my_short <= (max * 0.75)) {
-			tempB = 0x3F;
-		} else if(my_short <= (max * 0.875)) {
-			tempB = 0x7F;
-		} else if(my_short <= (max)) {
-			tempB = 0xFF;
+		my_short = ADC;
+		if(my_short > max) {
+			max = my_short;
 		}
-		
+		if(my_short >= (max / 2)) {
+			tempB = 0x00;
+		} else {	
+			tempB = 0x00;
+		}
 		PORTB = tempB;
 	}
 }
